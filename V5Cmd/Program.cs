@@ -1,22 +1,21 @@
-﻿using System;
+﻿using DataAccess;
+using System;
 using System.IO;
-using System.Net;
 using System.Text;
-using DataAccess;
 
 namespace V5Cmd
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             CreateStock();
             Console.WriteLine("完事了");
         }
-        
+
         private static void UpdateName()
         {
-            StringBuilder sbBuilder=new StringBuilder();
+            StringBuilder sbBuilder = new StringBuilder();
             StreamReader sr = File.OpenText(@"2014-2018汇总.txt");
             string nextLine = sr.ReadLine();
             while (nextLine != null)
@@ -61,17 +60,17 @@ namespace V5Cmd
                     double money = double.Parse(words[8]);
                     double realMoney = double.Parse(words[9]);
                     double otherMoney = double.Parse(words[10]) + double.Parse(words[11]) + double.Parse(words[12]) + double.Parse(words[13]);
-                    if (otherMoney<1)
+                    if (otherMoney < 1)
                     {
                         nextLine = sr.ReadLine();
                         continue;
                     }
                     long id = long.Parse(words[14]);
                     string sql =
-                        @"INSERT INTO `stocktraderecord`(`Id`, `TradeTime`, `code`, `name`, `tradetype`, `price`, `num`, `chengjiaoMoney`, `totalmoney`, `OtherMoney`) 
+                        @"INSERT INTO `stocktraderecord`(`Id`, `TradeTime`, `code`, `name`, `tradetype`, `price`, `num`, `chengjiaoMoney`, `totalmoney`, `OtherMoney`)
                         VALUES ('{0}', '{1}', '{2}', '{3}', {4}, {5}, {6}, {7}, {8}, {9});";
                     sql = string.Format(sql, id, time.ToString("yyyy-MM-dd HH:mm:ss"), code, name, tradetype, price, nums, money, realMoney, otherMoney);
-                    ContextHelper.ExcuteSql(sql,null);
+                    ContextHelper.ExcuteSql(sql, null);
                 }
                 catch (Exception e)
                 {
@@ -88,7 +87,7 @@ namespace V5Cmd
 
         private static string getDate(string line)
         {
-            string result= line.Substring(0, 4) + "-" + line.Substring(4, 2) + "-" + line.Substring(6, 2);
+            string result = line.Substring(0, 4) + "-" + line.Substring(4, 2) + "-" + line.Substring(6, 2);
             return result;
         }
     }
