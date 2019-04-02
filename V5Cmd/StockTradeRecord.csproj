@@ -107,6 +107,7 @@
     <Content Include="2014-2018汇总.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="2018中报.txt" />
     <Content Include="stocktraderecord.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
