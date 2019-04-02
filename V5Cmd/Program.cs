@@ -9,38 +9,26 @@ namespace V5Cmd
     {
         private static void Main(string[] args)
         {
-            CreateStock();
+            //CreateStock();
+            StockReport();
             Console.WriteLine("完事了");
         }
 
-        private static void UpdateName()
+        private static void StockReport()
         {
-            StringBuilder sbBuilder = new StringBuilder();
+            StringBuilder sb=new StringBuilder();
             StreamReader sr = File.OpenText(@"2014-2018汇总.txt");
             string nextLine = sr.ReadLine();
             while (nextLine != null)
             {
-                //0成交日期,1成交时间,2股东代码,3证券代码,4证券名称,5委托类别,6成交价格,7成交数量,8成交金额,9发生金额,10佣金,11印花税,12过户费,13其他费,14成交编号,
-                try
-                {
-                    string[] words = nextLine.Split(',');
-                    string name = words[4];
-                    string id = words[14];
-                    sbBuilder.AppendLine($"update stocktraderecord set name='{name}' where id='{id}';");
-                }
-                catch (Exception e)
-                {
-                    string msg = e.ToString();
-                    if (!msg.Contains("Duplicate entry"))
-                    {
-                        Console.WriteLine(nextLine);
-                    }
-                }
+                sb.AppendLine(nextLine);
                 nextLine = sr.ReadLine();
             }
             sr.Close();
-        }
 
+
+        }
+       
         private static void CreateStock()
         {
             StreamReader sr = File.OpenText(@"2014-2018汇总.txt");

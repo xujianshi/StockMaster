@@ -33,23 +33,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Chloe, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chloe.3.5.0\lib\net40\Chloe.dll</HintPath>
+    <Reference Include="Chloe, Version=3.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.3.8.1\lib\net40\Chloe.dll</HintPath>
     </Reference>
-    <Reference Include="Chloe.Extension, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chloe.Extension.3.0.0\lib\net40\Chloe.Extension.dll</HintPath>
+    <Reference Include="Chloe.Extension, Version=3.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.Extension.3.8.0\lib\net40\Chloe.Extension.dll</HintPath>
     </Reference>
-    <Reference Include="Chloe.MySql, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chloe.MySql.3.5.0\lib\net40\Chloe.MySql.dll</HintPath>
+    <Reference Include="Chloe.MySql, Version=3.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.MySql.3.8.1\lib\net40\Chloe.MySql.dll</HintPath>
     </Reference>
-    <Reference Include="Chloe.PostgreSQL, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chloe.PostgreSQL.3.5.0\lib\net40\Chloe.PostgreSQL.dll</HintPath>
+    <Reference Include="Chloe.PostgreSQL, Version=3.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.PostgreSQL.3.8.1\lib\net40\Chloe.PostgreSQL.dll</HintPath>
     </Reference>
-    <Reference Include="Chloe.SQLite, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chloe.SQLite.3.5.0\lib\net40\Chloe.SQLite.dll</HintPath>
+    <Reference Include="Chloe.SQLite, Version=3.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.SQLite.3.8.1\lib\net40\Chloe.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="Chloe.SqlServer, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chloe.SqlServer.3.5.0\lib\net40\Chloe.SqlServer.dll</HintPath>
+    <Reference Include="Chloe.SqlServer, Version=3.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.SqlServer.3.8.1\lib\net40\Chloe.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
