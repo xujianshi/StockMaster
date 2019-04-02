@@ -289,7 +289,19 @@ namespace XjsStock
         /// </summary>
         public static void StockMoney()
         {
-            var url = "http://www.sse.com.cn/market/stockdata/dividends/dividend/";
+            var url = "http://dcfm.eastmoney.com/em_mutisvcexpandinterface/api/js/get?type=YJBB21_YJBB&token=70f12f2f4f091e459a279469fe49eca5&st=latestnoticedate&sr=-1&p=5&ps=100&js=var%20ZOYBUuyH={pages:(tp),data:%20(x),font:(font)}&filter=(securitytypecode%20in%20(%27058001001%27,%27058001002%27))(reportdate=^2018-06-30^)&rt=51806794";
+            Dictionary<string,int>dic=new Dictionary<string, int>();
+            dic.Add("&#xEEC5;", 0);
+            dic.Add("&#xE793;",1);
+            dic.Add("&#xECE9;", 2);
+            dic.Add("&#xEA5D;", 3);
+            dic.Add("&#xF78F;",4);
+            dic.Add("&#xE4E5;",5);
+            dic.Add("&#xE73F;",6);
+            dic.Add("&#xE712;",7);
+            dic.Add("&#xE268;", 8);
+            dic.Add("&#xF2F8;",9);
+
         }
     }
 }
