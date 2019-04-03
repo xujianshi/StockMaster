@@ -15,6 +15,7 @@ namespace StockDownLoad
     {
         static void Main(string[] args)
         {
+            ClearFolder();
             var stockTable = ContextHelper.GetTable("select * from stock order by id");
             foreach (DataRow row in stockTable.Rows)
             {
@@ -34,6 +35,27 @@ namespace StockDownLoad
                 {
                     DownLoad(url, fileName);
                 }
+            }
+        }
+
+        private static void ClearFolder()
+        {
+            try
+            {
+                DirectoryInfo dir=new DirectoryInfo("HistoryData");
+                if (!dir.Exists)
+                {
+                    dir.Create();
+                }
+                var files = dir.GetFiles("*.csv");
+                foreach (var fileInfo in files)
+                {
+                    fileInfo.Delete();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
 
