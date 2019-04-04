@@ -1,5 +1,6 @@
 ﻿using DataAccess;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json.Linq;
@@ -8,18 +9,44 @@ namespace V5Cmd
 {
     internal class Program
     {
+       static readonly Dictionary<string, int> Dic = new Dictionary<string, int>();
         private static void Main(string[] args)
         {
+            Dic.Add("&#xEEC5;", 0);
+            Dic.Add("&#xE793;", 1);
+            Dic.Add("&#xECE9;", 2);
+            Dic.Add("&#xEA5D;", 3);
+            Dic.Add("&#xF78F;", 4);
+            Dic.Add("&#xE4E5;", 5);
+            Dic.Add("&#xE73F;", 6);
+            Dic.Add("&#xE712;", 7);
+            Dic.Add("&#xE268;", 8);
+            Dic.Add("&#xF2F8;", 9);
             //CreateStock();
-            StockReport201806();
+            StockReport("201809", @"2018年3季报.txt");
+            //StockReport("201806", @"2018中报.txt");
             Console.WriteLine("完事了");
         }
 
-        private static void StockReport201806()
+        /***
+** 功能：  字符串格式化替换操作
+** Author: Allen Zhang
+** RTX：   14002
+***/
+        //String.prototype.format = function()
+        //{
+        //    var args = arguments;
+        //    return this.replace(/\{ (\d +)\}/ g,
+        //    function(m, i) {
+        //        return args[i];
+        //    });
+        //}
+
+
+        private static void StockReport(string date,string filename)
         {
             StringBuilder sb=new StringBuilder();
-            StreamReader sr = File.OpenText(@"2018中报.txt");
-            var date = "201806";
+            StreamReader sr = File.OpenText(filename);
             string nextLine = sr.ReadLine();
             while (nextLine != null)
             {
@@ -27,7 +54,12 @@ namespace V5Cmd
                 nextLine = sr.ReadLine();
             }
             sr.Close();
-            JArray json=JArray.Parse(sb.ToString());
+            var jsonString = sb.ToString();
+            foreach (var item in Dic)
+            {
+                jsonString = jsonString.Replace(item.Key, item.Value.ToString());
+            }
+            JArray json=JArray.Parse(jsonString);
             foreach (var job in json)
             {
                 try
