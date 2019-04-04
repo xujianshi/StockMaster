@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess;
 using XjsStock;
 using XjsStock.Service;
 
@@ -31,9 +33,20 @@ namespace StockSeeker
         /// <param name="table"></param>
         static void updateStockUDPPS(DataTable table)
         {
-            Parallel.ForEach(table.AsEnumerable(), new ParallelOptions() { MaxDegreeOfParallelism = 20 }, dataRow =>
+            var exsist_table = ContextHelper.GetTable("select distinct code from stockfinanceoverview");
+            var codeList=new List<string>();
+            foreach (DataRow row in exsist_table.Rows)
             {
-                StockInterface.updateStockUDPPS(dataRow["id"].ToString());
+                codeList.Add(row["code"].ToString());
+            }
+            Parallel.ForEach(table.AsEnumerable(), new ParallelOptions() { MaxDegreeOfParallelism = 100 }, dataRow =>
+            {
+                var code = dataRow["id"].ToString();
+                if (!codeList.Contains(code))
+                {
+                    StockInterface.updateStockUDPPS(dataRow["id"].ToString());
+                    Console.WriteLine(dataRow["id"].ToString());
+                }
             });
         }
 

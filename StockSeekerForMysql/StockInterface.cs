@@ -8,6 +8,7 @@ using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using StockSeeker;
+using StockSeekerForMysql.Bean;
 using XjsStock.Bean;
 using XjsStock.Dao;
 using XjsStock.Service;
@@ -287,21 +288,111 @@ namespace XjsStock
         /// <summary>
         /// 更新股票分红
         /// </summary>
-        public static void StockMoney()
+        public static void updateStockUDPPS(string code)
         {
-            var url = "http://dcfm.eastmoney.com/em_mutisvcexpandinterface/api/js/get?type=YJBB21_YJBB&token=70f12f2f4f091e459a279469fe49eca5&st=latestnoticedate&sr=-1&p=5&ps=100&js=var%20ZOYBUuyH={pages:(tp),data:%20(x),font:(font)}&filter=(securitytypecode%20in%20(%27058001001%27,%27058001002%27))(reportdate=^2018-06-30^)&rt=51806794";
-            Dictionary<string,int>dic=new Dictionary<string, int>();
-            dic.Add("&#xEEC5;", 0);
-            dic.Add("&#xE793;",1);
-            dic.Add("&#xECE9;", 2);
-            dic.Add("&#xEA5D;", 3);
-            dic.Add("&#xF78F;",4);
-            dic.Add("&#xE4E5;",5);
-            dic.Add("&#xE73F;",6);
-            dic.Add("&#xE712;",7);
-            dic.Add("&#xE268;", 8);
-            dic.Add("&#xF2F8;",9);
+            var lable = code.StartsWith("60") ? "sh" : "sz";
+            var url = $"https://finance.sina.com.cn/realstock/company/{lable+code}/nc.shtml";
+            string html = new WebApi().GetHtml(url);
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            var rootDiv = doc.DocumentNode.SelectSingleNode("//div[@class='finance_overview']");
 
+            List<FinanceBean> financeBeanList= new List<FinanceBean>();
+            try
+            {
+                foreach (HtmlNode node in rootDiv.ChildNodes)
+                {
+                    var type = node.Name;
+                    if (type=="div")
+                    {
+                        if (node.Attributes[0] .Name== "class"&&node.Attributes[0].Value=="tabs")
+                        {
+                            var children = node.ChildNodes.Where(o=>o.Name=="div");
+                            foreach (HtmlNode child in children)
+                            {
+                                var text = child.InnerText;
+                                FinanceBean bean=new FinanceBean()
+                                {
+                                    code=code,
+                                    date = text.Replace("-","")
+                                };
+                                financeBeanList.Add(bean);
+                            }
+                        }
+                        else if (node.Attributes[0].Name == "class" && node.Attributes[0].Value.Contains("L_data_table"))
+                        {
+                            var trNodes = node.ChildNodes[1].ChildNodes[1].ChildNodes.Where(o=>o.Name=="tr").ToList();
+                            if (true)
+                            {
+                                //每股收益
+                                var nodes = trNodes[0].ChildNodes.Where(o => o.Name == "td").ToList();
+                                for (int i = 0; i < nodes.Count; i++)
+                                {
+                                    financeBeanList[i].mgsy = double.Parse(nodes[i].InnerText.Replace("Ԫ", ""));
+                                }
+                            }
+
+                            if (true)
+                            {
+                                var tdNodes = trNodes[1].ChildNodes.Where(o => o.Name == "td").ToList();
+                                for (int i = 0; i < tdNodes.Count; i++)
+                                {
+                                    financeBeanList[i].mgjzc = double.Parse(tdNodes[i].InnerText.Replace("Ԫ", ""));
+                                }
+                            }
+
+                            if (true)
+                            {
+                                var tdNodes = trNodes[2].ChildNodes.Where(o => o.Name == "td").ToList();
+                                for (int i = 0; i < tdNodes.Count; i++)
+                                {
+                                    financeBeanList[i].mgjyxjlje = double.Parse(tdNodes[i].InnerText.Replace("Ԫ", ""));
+                                }
+                            }
+
+                            if (true)
+                            {
+                                var tdNodes = trNodes[3].ChildNodes.Where(o => o.Name == "td").ToList();
+                                for (int i = 0; i < tdNodes.Count; i++)
+                                {
+                                    financeBeanList[i].jzcsyl = double.Parse(tdNodes[i].InnerText.Replace("%", ""));
+                                }
+                            }
+
+                            if (true)
+                            {
+                                var tdNodes = trNodes[4].ChildNodes.Where(o => o.Name == "td").ToList();
+                                for (int i = 0; i < tdNodes.Count; i++)
+                                {
+                                    financeBeanList[i].mgwfplr = double.Parse(tdNodes[i].InnerText.Replace("Ԫ", ""));
+                                }
+                            }
+
+                            if (true)
+                            {
+                                var tdnodes = trNodes[5].ChildNodes.Where(o => o.Name == "td").ToList();
+                                for (int i = 0; i < tdnodes.Count; i++)
+                                {
+                                    financeBeanList[i].mggjj = double.Parse(tdnodes[i].InnerText.Replace("Ԫ", ""));
+                                }
+                            }
+                            int xjs = 123;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(code+"异常"+e.Message);
+                int xjs = 123;
+            }
+            foreach (FinanceBean bean in financeBeanList)
+            {
+                 var insertSql =
+                    $@"INSERT INTO `stock`.`stockfinanceoverview`(`date`, `code`, `mgsy`,`mgjzc`, `mgjyxjlje`, `jzcsyl`, `mgwfplr`, `mgzbgjj`) 
+                           VALUES ('{bean.date}', '{bean.code}', {bean.mgsy},{bean.mgjzc}, {bean.mgjyxjlje}, {bean.jzcsyl}, {bean.mgjyxjlje}, {bean.mggjj});";
+                ContextHelper.ExcuteSql(insertSql, null);
+            }
         }
     }
 }

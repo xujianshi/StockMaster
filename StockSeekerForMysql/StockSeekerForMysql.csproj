@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bean\BaseBean.cs" />
+    <Compile Include="Bean\FinanceBean.cs" />
     <Compile Include="Bean\StockBean.cs" />
     <Compile Include="Bean\StockHistoryBean.cs" />
     <Compile Include="Bean\StockPriceBean.cs" />
