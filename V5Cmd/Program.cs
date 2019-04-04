@@ -11,8 +11,8 @@ namespace V5Cmd
     {
         private static void Main(string[] args)
         {
-            //CreateStock();
-            StockReport("201809", @"2018年3季报.txt");
+            CreateStock();
+            //StockReport("201809", @"2018年3季报.txt");
             //StockReport("201806", @"2018中报.txt");
             Console.WriteLine("完事了");
         }
