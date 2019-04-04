@@ -1,0 +1,2 @@
+﻿1.2018三季度财报
+http://dcfm.eastmoney.com/em_mutisvcexpandinterface/api/js/get?type=YJBB21_YJBB&token=70f12f2f4f091e459a279469fe49eca5&st=latestnoticedate&sr=-1&p=1&ps=5000&js=var%20ptgTjmSt={pages:(tp),data:%20(x),font:(font)}&filter=(securitytypecode%20in%20(%27058001001%27,%27058001002%27))(reportdate=^2018-09-30^)&rt=51811840

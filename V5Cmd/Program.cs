@@ -9,38 +9,14 @@ namespace V5Cmd
 {
     internal class Program
     {
-       static readonly Dictionary<string, int> Dic = new Dictionary<string, int>();
         private static void Main(string[] args)
         {
-            Dic.Add("&#xEEC5;", 0);
-            Dic.Add("&#xE793;", 1);
-            Dic.Add("&#xECE9;", 2);
-            Dic.Add("&#xEA5D;", 3);
-            Dic.Add("&#xF78F;", 4);
-            Dic.Add("&#xE4E5;", 5);
-            Dic.Add("&#xE73F;", 6);
-            Dic.Add("&#xE712;", 7);
-            Dic.Add("&#xE268;", 8);
-            Dic.Add("&#xF2F8;", 9);
             //CreateStock();
             StockReport("201809", @"2018年3季报.txt");
             //StockReport("201806", @"2018中报.txt");
             Console.WriteLine("完事了");
         }
 
-        /***
-** 功能：  字符串格式化替换操作
-** Author: Allen Zhang
-** RTX：   14002
-***/
-        //String.prototype.format = function()
-        //{
-        //    var args = arguments;
-        //    return this.replace(/\{ (\d +)\}/ g,
-        //    function(m, i) {
-        //        return args[i];
-        //    });
-        //}
 
 
         private static void StockReport(string date,string filename)
@@ -55,11 +31,16 @@ namespace V5Cmd
             }
             sr.Close();
             var jsonString = sb.ToString();
-            foreach (var item in Dic)
+            jsonString = jsonString.Replace("var ptgTjmSt=", "");
+            var rootJson = JObject.Parse(jsonString);
+            var font= (JObject)rootJson["font"];
+            JArray FontMapping = (JArray)font["FontMapping"];
+            foreach (JObject job  in FontMapping)
             {
-                jsonString = jsonString.Replace(item.Key, item.Value.ToString());
+                jsonString = jsonString.Replace(job["code"].ToString(), job["value"].ToString());
             }
-            JArray json=JArray.Parse(jsonString);
+            rootJson = JObject.Parse(jsonString);//重新加载
+            JArray json=(JArray)rootJson["data"];
             foreach (var job in json)
             {
                 try

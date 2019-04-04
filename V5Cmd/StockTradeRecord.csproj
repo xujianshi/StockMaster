@@ -119,7 +119,9 @@
     <Content Include="2018年3季报.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="data\plugin.js" />
     <Content Include="data\public_common_tools.js" />
+    <Content Include="data\财报地址.txt" />
     <Content Include="stocktraderecord.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
