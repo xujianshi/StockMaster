@@ -20,11 +20,9 @@ namespace StockSeeker
             //更新上市日期
             //StockInterface.UpdateShangShiRq(stockTable);
             //更新实时股票价格
-            //StockInterface.UpdateByTecent(stockTable);
-
-            updateStockUDPPS(stockTable);//更新财务资料
-
-            //updateDayDate(stockTable);
+            StockInterface.UpdateByTecent(stockTable);
+            //updateStockUDPPS(stockTable);//更新财务资料
+            updateDayDate(stockTable);
         }
 
         /// <summary>

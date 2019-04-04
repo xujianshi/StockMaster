@@ -390,7 +390,7 @@ namespace XjsStock
             {
                  var insertSql =
                     $@"INSERT INTO `stock`.`stockfinanceoverview`(`date`, `code`, `mgsy`,`mgjzc`, `mgjyxjlje`, `jzcsyl`, `mgwfplr`, `mgzbgjj`) 
-                           VALUES ('{bean.date}', '{bean.code}', {bean.mgsy},{bean.mgjzc}, {bean.mgjyxjlje}, {bean.jzcsyl}, {bean.mgjyxjlje}, {bean.mggjj});";
+                           VALUES ('{bean.date}', '{bean.code}', {bean.mgsy},{bean.mgjzc}, {bean.mgjyxjlje}, {bean.jzcsyl}, {bean.mgwfplr}, {bean.mggjj});";
                 ContextHelper.ExcuteSql(insertSql, null);
             }
         }
