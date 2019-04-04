@@ -19,7 +19,7 @@ namespace XjsStock
         private CookieContainer cookieContainer = new CookieContainer();
 
 
-        public string GetHtml(string href)
+        public string GetHtml(string href,string characterSet="")
         {
             try
             {  
@@ -35,12 +35,18 @@ namespace XjsStock
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 Stream stream = response.GetResponseStream();
                 //处理ISO-8859-1字符集：直接设置为UTF-8
-                string characterSet = response.CharacterSet;
-                if (characterSet == "ISO-8859-1")
+                if (string.IsNullOrEmpty(characterSet))
                 {
-                    characterSet = "UTF-8";
+                    characterSet = response.CharacterSet;
+                    if (characterSet == "ISO-8859-1")
+                    {
+                        characterSet = "UTF-8";
+                    }
                 }
-                if (string.IsNullOrEmpty(characterSet)) characterSet = "GB2312";
+                if (string.IsNullOrEmpty(characterSet))
+                {
+                    characterSet = "gb2312";
+                }
                 //读取流
                 StreamReader streamreader = new StreamReader(stream, Encoding.GetEncoding(characterSet));
                 string html = streamreader.ReadToEnd();

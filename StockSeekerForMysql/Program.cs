@@ -14,15 +14,17 @@ namespace StockSeeker
     {
         static void Main(string[] args)
         {
-            var stockTable = StockService.GetStockTable();
+            var html=new WebApi().GetHtml("https://finance.sina.com.cn/realstock/company/sz300556/nc.shtml", "gb2312");
+            int xjs = 123;
+            //var stockTable = StockService.GetStockTable();
             //更新股票名称
             //StockInterface.UpDateStockList(stockTable);
             //更新上市日期
             //StockInterface.UpdateShangShiRq(stockTable);
             //更新实时股票价格
-            StockInterface.UpdateByTecent(stockTable);
+            //StockInterface.UpdateByTecent(stockTable);
             //updateStockUDPPS(stockTable);//更新财务资料
-            updateDayDate(stockTable);
+            //updateDayDate(stockTable);
         }
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace StockSeeker
             {
                 codeList.Add(row["code"].ToString());
             }
-            Parallel.ForEach(table.AsEnumerable(), new ParallelOptions() { MaxDegreeOfParallelism = 100 }, dataRow =>
+            Parallel.ForEach(table.AsEnumerable(), new ParallelOptions() { MaxDegreeOfParallelism = 1 }, dataRow =>
             {
                 var code = dataRow["id"].ToString();
                 if (!codeList.Contains(code))

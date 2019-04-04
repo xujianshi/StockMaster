@@ -328,7 +328,7 @@ namespace XjsStock
                                 var nodes = trNodes[0].ChildNodes.Where(o => o.Name == "td").ToList();
                                 for (int i = 0; i < nodes.Count; i++)
                                 {
-                                    financeBeanList[i].mgsy = double.Parse(nodes[i].InnerText.Replace("Ԫ", ""));
+                                    financeBeanList[i].mgsy = double.Parse(nodes[i].InnerText.Replace("元", ""));
                                 }
                             }
 
@@ -337,7 +337,7 @@ namespace XjsStock
                                 var tdNodes = trNodes[1].ChildNodes.Where(o => o.Name == "td").ToList();
                                 for (int i = 0; i < tdNodes.Count; i++)
                                 {
-                                    financeBeanList[i].mgjzc = double.Parse(tdNodes[i].InnerText.Replace("Ԫ", ""));
+                                    financeBeanList[i].mgjzc = double.Parse(tdNodes[i].InnerText.Replace("元", ""));
                                 }
                             }
 
@@ -346,7 +346,7 @@ namespace XjsStock
                                 var tdNodes = trNodes[2].ChildNodes.Where(o => o.Name == "td").ToList();
                                 for (int i = 0; i < tdNodes.Count; i++)
                                 {
-                                    financeBeanList[i].mgjyxjlje = double.Parse(tdNodes[i].InnerText.Replace("Ԫ", ""));
+                                    financeBeanList[i].mgjyxjlje = double.Parse(tdNodes[i].InnerText.Replace("元", ""));
                                 }
                             }
 
@@ -364,7 +364,7 @@ namespace XjsStock
                                 var tdNodes = trNodes[4].ChildNodes.Where(o => o.Name == "td").ToList();
                                 for (int i = 0; i < tdNodes.Count; i++)
                                 {
-                                    financeBeanList[i].mgwfplr = double.Parse(tdNodes[i].InnerText.Replace("Ԫ", ""));
+                                    financeBeanList[i].mgwfplr = double.Parse(tdNodes[i].InnerText.Replace("元", ""));
                                 }
                             }
 
@@ -373,7 +373,7 @@ namespace XjsStock
                                 var tdnodes = trNodes[5].ChildNodes.Where(o => o.Name == "td").ToList();
                                 for (int i = 0; i < tdnodes.Count; i++)
                                 {
-                                    financeBeanList[i].mggjj = double.Parse(tdnodes[i].InnerText.Replace("Ԫ", ""));
+                                    financeBeanList[i].mggjj = double.Parse(tdnodes[i].InnerText.Replace("元", ""));
                                 }
                             }
                             int xjs = 123;
