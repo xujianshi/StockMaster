@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace V5Cmd
 {
@@ -10,14 +11,15 @@ namespace V5Cmd
         private static void Main(string[] args)
         {
             //CreateStock();
-            StockReport();
+            StockReport201806();
             Console.WriteLine("完事了");
         }
 
-        private static void StockReport()
+        private static void StockReport201806()
         {
             StringBuilder sb=new StringBuilder();
-            StreamReader sr = File.OpenText(@"2014-2018汇总.txt");
+            StreamReader sr = File.OpenText(@"2018中报.txt");
+            var date = "201806";
             string nextLine = sr.ReadLine();
             while (nextLine != null)
             {
@@ -25,8 +27,34 @@ namespace V5Cmd
                 nextLine = sr.ReadLine();
             }
             sr.Close();
-
-
+            JArray json=JArray.Parse(sb.ToString());
+            foreach (var job in json)
+            {
+                try
+                {
+                    string code = job["scode"].ToString();
+                    string totaloperatereve = job["totaloperatereve"].ToString();
+                    var parentnetprofit = job["parentnetprofit"].ToString();
+                    var basiceps = job["basiceps"].ToString();
+                    if (basiceps=="-")
+                    {
+                        basiceps = "0";
+                    }
+                    var xsmll = job["xsmll"].ToString();
+                    var sql= $@"INSERT INTO `stock`.`stockreport`
+                                    (`date`, `code`, `totaloperatereve`, `parentnetprofit`, `basiceps`, `xsmll`) 
+                                    VALUES ('{date}', '{code}', {totaloperatereve}, {parentnetprofit}, {basiceps}, '{xsmll}');       ";
+                  var rst=  ContextHelper.ExcuteSql(sql,null);
+                  if (rst>0)
+                  {
+                      Console.WriteLine(code);
+                  }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
         }
        
         private static void CreateStock()
