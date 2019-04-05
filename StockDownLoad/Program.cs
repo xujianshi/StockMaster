@@ -17,13 +17,18 @@ namespace StockDownLoad
         {
             ClearFolder();
             var stockTable = ContextHelper.GetTable("select * from stock order by id");
+            DownLoad(stockTable);
+        }
+
+        private static void DownLoad(DataTable stockTable)
+        {
             foreach (DataRow row in stockTable.Rows)
             {
                 string code = row["id"].ToString();
                 int flag = code.StartsWith("60") ? 0 : 1;
                 DateTime createDay = DateTime.Parse(row["createday"].ToString());
                 DateTime minDate = DateTime.Parse(ConfigurationManager.AppSettings["mindate"]);
-                if (createDay<minDate)
+                if (createDay < minDate)
                 {
                     createDay = minDate;
                 }
@@ -72,6 +77,32 @@ namespace StockDownLoad
             catch (Exception e)
             {
                 Console.WriteLine(fileName + "下载失败");
+            }
+        }
+
+        /// <summary>
+        /// 合并文件
+        /// </summary>
+        static void DeleteName(string filename)
+        {
+            try
+            {
+                FileInfo info = new FileInfo(filename);
+                var lines = XFileCtr.getContentList(info.FullName);
+                StringBuilder sb = new StringBuilder();
+                foreach (string line in lines)
+                {
+                    var list = new List<string>(line.Replace("'", "").Split(','));
+                    list.RemoveAt(2);
+                    var newLine = string.Join(",", list);
+                    sb.AppendLine(newLine);
+                }
+                info.Delete();
+                XFileCtr.OutFile(filename, sb.ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
     }
