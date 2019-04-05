@@ -16,7 +16,8 @@ namespace StockSeeker
         {
             var stockTable = StockService.GetStockTable();
             //更新股票名称
-            //StockInterface.UpDateStockList(stockTable);
+            StockInterface.UpDateStockList(stockTable);
+            stockTable = StockService.GetStockTable();
             ClearFolder();
             DownLoad(stockTable);
             //更新上市日期
