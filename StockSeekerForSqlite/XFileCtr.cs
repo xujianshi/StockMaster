@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace XjsStock
 {
@@ -9,7 +10,7 @@ namespace XjsStock
         public static void OutFile(String vPath, string vContent)
         {
             FileStream _Stream = new FileStream(vPath, FileMode.Create);//新建文件
-            StreamWriter _Writer = new StreamWriter(_Stream);
+            StreamWriter _Writer = new StreamWriter(_Stream,Encoding.Default);
             _Writer.WriteLine(vContent);
             _Writer.Close();
             _Stream.Close();
@@ -41,7 +42,7 @@ namespace XjsStock
         /// <returns></returns>
         public static List<String> getContentList(String vFileName)
         {
-            StreamReader _Reader = new StreamReader(vFileName);
+            StreamReader _Reader = new StreamReader(vFileName,Encoding.Default);
             List<String> _Result = new List<String>();
             string line = _Reader.ReadLine();
             while (line != null)

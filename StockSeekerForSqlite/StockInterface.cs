@@ -20,6 +20,7 @@ namespace XjsStock
         /// <param name="vStockTable"></param>
         public static void UpDateStockList(DataTable vStockTable)
         {
+            Console.WriteLine("开始同步股票代码");
             for (int market = 0; market < 3; market++)
             {
                 for (int page = 1; page < 5; page++)
@@ -50,22 +51,23 @@ namespace XjsStock
                                 }
                                 else //更新实时信息
                                 {
+                                    Console.WriteLine("刷新收录股票" + _code + _name);
                                     new StockDao().Update(stockBean);
-                                    Console.WriteLine("更新股票名称" + _code + _name);
                                 }
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine(ex.Message);
+                                //Console.WriteLine(ex.Message);
                             }
                         }
                     }
                     catch (System.Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
+                        //Console.WriteLine(ex.Message);
                     }
                 }
             }
+            Console.WriteLine("完成同步股票代码");
         }
 
         public static void UpdateByTecent(DataTable vStockTable)
