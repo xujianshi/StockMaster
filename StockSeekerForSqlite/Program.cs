@@ -14,14 +14,9 @@ namespace StockSeeker
     {
         private static void Main(string[] args)
         {
-            var stockTable = StockService.GetStockTable();
-            //更新股票名称
-            StockInterface.UpDateStockList(stockTable);
-            stockTable = StockService.GetStockTable();
-            ClearFolder();
-            DownLoad(stockTable);
-            //更新上市日期
-            //StockInterface.UpdateShangShiRq(stockTable);
+            StockInterface.UpDateStockList();//更新股票名称
+            StockInterface.UpdateShangShiRq();//更新上市日期
+            DownLoad();//下载股票文件
             //更新实时股票价格
             //StockInterface.UpdateByTecent(stockTable);
             //foreach (DataRow dataRow in stockTable.Rows)
@@ -31,25 +26,34 @@ namespace StockSeeker
             //}
         }
 
-        private static void DownLoad(DataTable stockTable)
+        private static void DownLoad()
         {
+            var stockTable = StockService.GetStockTable();
+            ClearFolder();
             foreach (DataRow row in stockTable.Rows)
             {
-                string code = row["id"].ToString();
-                int flag = code.StartsWith("60") ? 0 : 1;
-                DateTime createDay = DateTime.Parse(row["createday"].ToString());
-                DateTime minDate = DateTime.Parse(ConfigurationManager.AppSettings["mindate"]);
-                if (createDay < minDate)
+                 string code = row["id"].ToString();
+                try
                 {
-                    createDay = minDate;
+                    int flag = code.StartsWith("60") ? 0 : 1;
+                    DateTime createDay = DateTime.Parse(row["createday"].ToString());
+                    DateTime minDate = DateTime.Parse(ConfigurationManager.AppSettings["mindate"]);
+                    if (createDay < minDate)
+                    {
+                        createDay = minDate;
+                    }
+                    string begin = createDay.ToString("yyyyMMdd");
+                    string end = DateTime.Now.AddDays(-1).ToString("yyyyMMdd");
+                    string url = $"http://quotes.money.163.com/service/chddata.html?code={flag}{code}&start={begin}&end={end}&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP";
+                    string fileName = "HistoryData\\" + code + ".csv";
+                    if (!File.Exists(fileName))
+                    {
+                        DownLoad(url, fileName);
+                    }
                 }
-                string begin = createDay.ToString("yyyyMMdd");
-                string end = DateTime.Now.AddDays(-1).ToString("yyyyMMdd");
-                string url = $"http://quotes.money.163.com/service/chddata.html?code={flag}{code}&start={begin}&end={end}&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP";
-                string fileName = "HistoryData\\" + code + ".csv";
-                if (!File.Exists(fileName))
+                catch (Exception e)
                 {
-                    DownLoad(url, fileName);
+                    Console.WriteLine(e.Message+"-->"+code);
                 }
             }
         }
