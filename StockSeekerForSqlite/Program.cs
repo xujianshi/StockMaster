@@ -14,11 +14,11 @@ namespace StockSeeker
     {
         private static void Main(string[] args)
         {
-            //StockInterface.UpDateStockList();//更新股票名称
+            StockInterface.UpDateStockList();//更新股票名称
             //DownLoad();//下载股票文件
-           //更新实时股票价格
-           var stockTable = StockService.GetStockTable();
-            StockInterface.UpdateByTecent(stockTable);
+            //更新实时股票价格
+            var stockTable = StockService.GetStockTable();
+           StockInterface.UpdateByTecent(stockTable);
             foreach (DataRow dataRow in stockTable.Rows)
             {
                 Console.WriteLine("开始更新" + dataRow["name"]);
