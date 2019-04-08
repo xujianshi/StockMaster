@@ -14,9 +14,9 @@ namespace StockSeeker
     {
         static void Main(string[] args)
         {
-            StockInterface.UpDateStockList();//更新股票名称
-            StockInterface.UpdateShangShiRq();//更新上市日期
-            StockInterface.UpdateByTecent(); //更新实时股票价格
+            //StockInterface.UpDateStockList();//更新股票名称
+            //StockInterface.UpdateShangShiRq();//更新上市日期
+            //StockInterface.UpdateByTecent(); //更新实时股票价格
             //updateStockUDPPS(stockTable);//更新财务资料
             updateDayDate();//更新日数据
         }
