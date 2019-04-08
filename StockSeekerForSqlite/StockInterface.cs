@@ -119,7 +119,8 @@ namespace XjsStock
       public static void UpdateShangShiRq()
         {
             var table = StockService.GetStockTable();
-            foreach (DataRow row in table.Rows)
+            var rows = table.Select("createday is null or createday=''");
+            foreach (DataRow row in rows)
             {
                 string sql = string.Empty;
                 try
