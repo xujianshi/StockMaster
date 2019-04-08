@@ -49,11 +49,11 @@ namespace XjsStock
                                     new StockDao().Add(stockBean);
                                     Console.WriteLine("增加收录股票" + _code + _name);
                                 }
-                                else //更新实时信息
-                                {
-                                    Console.WriteLine("刷新收录股票" + _code + _name);
-                                    new StockDao().Update(stockBean);
-                                }
+                                //else //更新实时信息
+                                //{
+                                //    //Console.WriteLine("刷新收录股票" + _code + _name);
+                                //    //new StockDao().Update(stockBean);
+                                //}
                             }
                             catch (Exception ex)
                             {
