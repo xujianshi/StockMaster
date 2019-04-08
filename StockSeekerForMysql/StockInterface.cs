@@ -21,8 +21,9 @@ namespace XjsStock
         /// 调取同花顺接口获得所有股票列表
         /// </summary>
         /// <param name="vStockTable"></param>
-        public static void UpDateStockList(DataTable vStockTable)
+        public static void UpDateStockList()
         {
+            var stockTable = StockService.GetStockTable();
             for (int market = 0; market < 3; market++)
             {
 
@@ -46,7 +47,7 @@ namespace XjsStock
                                     ID = _code,
                                     Name = _name
                                 };
-                                var theone = vStockTable.Select(string.Format("id='{0}'", _code)).FirstOrDefault();
+                                var theone = stockTable.Select($"id='{_code}'").FirstOrDefault();
                                 if (null == theone)
                                 {
                                     new StockDao().Add(stockBean);
@@ -72,9 +73,10 @@ namespace XjsStock
             }
         }
         
-        public static void UpdateByTecent(DataTable vStockTable)
+        public static void UpdateByTecent()
         {
-            foreach (DataRow row in vStockTable.Rows)
+            var stockTable = StockService.GetStockTable();
+            foreach (DataRow row in stockTable.Rows)
             {
                 try
                 {
@@ -118,10 +120,10 @@ namespace XjsStock
         /// <summary>
         /// 获取上市日期
         /// </summary>
-        /// <param name="vStockTable"></param>
-        public static void UpdateShangShiRq(DataTable vStockTable)
+        public static void UpdateShangShiRq()
         {
-            foreach (DataRow row in vStockTable.Rows)
+            var stockTable = StockService.GetStockTable();
+            foreach (DataRow row in stockTable.Rows)
             {
                 string sql = string.Empty;
                 try
