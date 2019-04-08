@@ -36,7 +36,9 @@ namespace StockSeeker
                 try
                 {
                     int flag = code.StartsWith("60") ? 0 : 1;
-                    DateTime createDay = DateTime.Parse(row["createday"].ToString());
+                    DateTime createDay = string.IsNullOrEmpty(row["createday"].ToString())
+                        ? DateTime.Parse("2019-01-01")
+                        : DateTime.Parse(row["createday"].ToString());
                     DateTime minDate = DateTime.Parse(ConfigurationManager.AppSettings["mindate"]);
                     if (createDay < minDate)
                     {
