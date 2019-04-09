@@ -18,6 +18,14 @@ namespace StockSeeker
         private static DataTable LastDayTable = null;
         private static void Main(string[] args)
         {
+            if (DateTime.Now>DateTime.Parse("2019-04-15"))
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    Console.WriteLine("过期了，请缴费~");
+                }
+                return;
+            }
             StockInterface.UpDateStockList();//更新股票名称
             var stockTable = StockService.GetStockTable();
             StockInterface.UpdateByTecent(stockTable);//更新实时股票价格
